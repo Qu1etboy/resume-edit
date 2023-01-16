@@ -7,7 +7,7 @@ export default function EditResume() {
       <section className="w-full print:hidden">
         <FormComponent />
       </section>
-      <section className="w-full p-3 border print:border-0">
+      <section className="w-full p-5 border print:border-0">
         <Resume />
       </section>
     </main>
