@@ -17,7 +17,7 @@ export default function FormLayout({
           className="w-full text-left cursor-pointer p-5"
           onClick={() => setOpenForm(!openForm)}
         >
-          {title !== undefined ? title : "Untitled"}
+          {title !== undefined && title !== "" ? title : "Untitled"}
           <span className="float-right group-hover:text-blue-500">v</span>
         </button>
         {openForm && <>{children}</>}
