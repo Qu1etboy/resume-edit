@@ -10,7 +10,7 @@ import type {
 
 export default function Resume({ resume }: { resume: Resume }) {
   return (
-    <div>
+    <div className="bg-white p-10 rounded-md shadow-xl min-h-screen print:p-0 print:shadow-none">
       <h1 className="text-3xl font-bold">{resume.name}</h1>
       <h2 className="text-lg font-semibold mb-2">{resume.job}</h2>
       <section className="mb-3 text-sm">
@@ -79,7 +79,7 @@ export default function Resume({ resume }: { resume: Resume }) {
         </section>
       )}
       {resume["interests"] && (
-        <section className="mb-3">
+        <section className="">
           <h1 className="text-lg font-bold border-b border-black mb-2">
             Interests
           </h1>
