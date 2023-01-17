@@ -1,7 +1,15 @@
-import FormComponent from "@/components/FormComponent";
 import ResumeComponent from "@/components/Resume";
 import type { Resume } from "@/lib/types";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+
+// disable ssr on form component
+const DynamicFormComponent = dynamic(
+  () => import("@/components/FormComponent"),
+  {
+    ssr: false,
+  }
+);
 
 export default function EditResume() {
   const [resume, setResume] = useState<Resume>({
@@ -12,7 +20,7 @@ export default function EditResume() {
   return (
     <main className="flex ">
       <section className="w-full print:hidden">
-        <FormComponent setParentResume={setResume} />
+        <DynamicFormComponent setParentResume={setResume} />
       </section>
       <section className="w-full p-5 border print:border-0">
         <ResumeComponent resume={resume as Resume} />

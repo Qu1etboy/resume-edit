@@ -100,9 +100,14 @@ const resumeForm = [
 ];
 
 export default function FormComponent({ setParentResume }: any) {
-  const [resume, setResume] = useState<Resume>({
-    name: "",
-    job: "",
+  const [resume, setResume] = useState<Resume>(() => {
+    const initialValue = {
+      name: "",
+      job: "",
+    };
+    if (typeof window === "undefined") return initialValue;
+    const stored = localStorage.getItem("resume");
+    return stored ? JSON.parse(stored) : initialValue;
   });
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +141,7 @@ export default function FormComponent({ setParentResume }: any) {
 
   useEffect(() => {
     // sent data back to parent component
+    localStorage.setItem("resume", JSON.stringify(resume));
     setParentResume(resume);
   }, [resume]);
 
@@ -147,6 +153,7 @@ export default function FormComponent({ setParentResume }: any) {
         <input
           placeholder="e.g. John Doe"
           name="name"
+          value={resume.name}
           className="p-2 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -154,6 +161,7 @@ export default function FormComponent({ setParentResume }: any) {
         <input
           placeholder="e.g. Software Engineer"
           name="job"
+          value={resume.job}
           className="p-2 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
