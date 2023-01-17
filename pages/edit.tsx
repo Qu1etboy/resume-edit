@@ -22,7 +22,7 @@ export default function EditResume() {
       <section className="w-full print:hidden">
         <DynamicFormComponent setParentResume={setResume} />
       </section>
-      <section className="w-full p-5 border print:border-0">
+      <section className="w-full h-screen overflow-scroll p-5 border print:border-0">
         <ResumeComponent resume={resume as Resume} />
       </section>
     </main>
