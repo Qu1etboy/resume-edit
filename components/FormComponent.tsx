@@ -142,7 +142,14 @@ export default function FormComponent({ setParentResume, setEdit }: any) {
         `http://localhost:3000/api/resume?id=${session?.user?.id}`
       );
       const data = await res.json();
-      setResume(data);
+      setResume(() =>
+        data === null
+          ? {
+              name: "",
+              job: "",
+            }
+          : data
+      );
     };
 
     getData();

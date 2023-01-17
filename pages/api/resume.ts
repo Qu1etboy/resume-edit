@@ -16,7 +16,7 @@ export default async function handler(
       _id: id,
     });
 
-    res.status(200).json(result);
+    return res.status(200).json(result);
   }
   if (req.method === "POST") {
     const { resume, id } = req.body;
@@ -36,7 +36,7 @@ export default async function handler(
       }
     );
 
-    res.status(201).json(result);
+    return res.status(201).json(result);
   }
 
   res.status(405).send("method not allowed");

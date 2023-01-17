@@ -10,7 +10,7 @@ import type {
 
 export default function Resume({ resume }: { resume: Resume }) {
   return (
-    <div className="bg-white p-10 rounded-md shadow-xl min-h-screen print:p-0 print:shadow-none">
+    <div className="bg-white p-10 rounded-md shadow-xl print:p-0 print:shadow-none">
       <h1 className="text-3xl font-bold">{resume.name}</h1>
       <h2 className="text-lg font-semibold mb-2">{resume.job}</h2>
       <section className="mb-3 text-sm">
@@ -24,7 +24,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           ))}
         </ul>
       </section>
-      {resume["skills"] && (
+      {resume["skills"] && resume["skills"].length > 0 && (
         <section className="mb-3">
           <h1 className="text-lg font-bold border-b border-black mb-2">
             Technologies and Languague
@@ -36,7 +36,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           </ul>
         </section>
       )}
-      {resume["educations"] && (
+      {resume["educations"] && resume["educations"].length > 0 && (
         <section className="mb-3">
           <h1 className="text-lg font-bold border-b border-black mb-2">
             Educations
@@ -50,7 +50,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           </ul>
         </section>
       )}
-      {resume["workExps"] && (
+      {resume["workExps"] && resume["workExps"].length > 0 && (
         <section className="mb-3">
           <h1 className="text-lg font-bold border-b border-black mb-2">
             Work Experience
@@ -63,7 +63,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           ))}
         </section>
       )}
-      {resume["projects"] && (
+      {resume["projects"] && resume["projects"].length > 0 && (
         <section className="mb-3">
           <h1 className="text-lg font-bold border-b border-black mb-2">
             Projects
@@ -78,7 +78,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           </ul>
         </section>
       )}
-      {resume["interests"] && (
+      {resume["interests"] && resume["interests"].length > 0 && (
         <section className="">
           <h1 className="text-lg font-bold border-b border-black mb-2">
             Interests
