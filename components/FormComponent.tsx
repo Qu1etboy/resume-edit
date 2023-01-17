@@ -123,6 +123,13 @@ export default function FormComponent() {
     });
   };
 
+  const handleRemoveData = (dataId: string, field: string) => {
+    setResume({
+      ...resume,
+      [field]: resume[field].filter((d: any) => d.id !== dataId),
+    });
+  };
+
   useEffect(() => {
     // sent data back to parent component
     // console.log(resume);
@@ -156,6 +163,7 @@ export default function FormComponent() {
               form={resumeForm[idx]}
               currValue={value}
               handleChangeData={handleChangeData}
+              handleRemoveData={handleRemoveData}
             />
           ))}
           <AddFormButton
