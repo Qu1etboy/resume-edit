@@ -75,7 +75,11 @@ const resumeForm = [
         name: "projectName",
         placeHolder: "Project Name",
       },
-      { label: "Description", name: "Description", placeHolder: "Description" },
+      {
+        label: "Description",
+        name: "projectDescr",
+        placeHolder: "Description",
+      },
     ],
     value: { projectName: "", projectDescr: "" },
     button: "Add project",
@@ -95,7 +99,7 @@ const resumeForm = [
   },
 ];
 
-export default function FormComponent() {
+export default function FormComponent({ setParentResume }: any) {
   const [resume, setResume] = useState<Resume>({
     name: "",
     job: "",
@@ -132,7 +136,7 @@ export default function FormComponent() {
 
   useEffect(() => {
     // sent data back to parent component
-    // console.log(resume);
+    setParentResume(resume);
   }, [resume]);
 
   return (
