@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AddFormButton from "./AddFormButton";
 import Form from "./Form";
 import type { Resume } from "@/lib/types";
+import { useSession } from "next-auth/react";
 
 const resumeForm = [
   {
@@ -99,15 +100,11 @@ const resumeForm = [
   },
 ];
 
-export default function FormComponent({ setParentResume }: any) {
-  const [resume, setResume] = useState<Resume>(() => {
-    const initialValue = {
-      name: "",
-      job: "",
-    };
-    if (typeof window === "undefined") return initialValue;
-    const stored = localStorage.getItem("resume");
-    return stored ? JSON.parse(stored) : initialValue;
+export default function FormComponent({ setParentResume, setEdit }: any) {
+  const { data: session } = useSession();
+  const [resume, setResume] = useState<Resume>({
+    name: "",
+    job: "",
   });
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,8 +137,19 @@ export default function FormComponent({ setParentResume }: any) {
   };
 
   useEffect(() => {
-    // sent data back to parent component
-    localStorage.setItem("resume", JSON.stringify(resume));
+    const getData = async () => {
+      const res = await fetch(
+        `http://localhost:3000/api/resume?id=${session?.user?.id}`
+      );
+      const data = await res.json();
+      setResume(data);
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    setEdit(true);
     setParentResume(resume);
   }, [resume]);
 
@@ -153,7 +161,7 @@ export default function FormComponent({ setParentResume }: any) {
         <input
           placeholder="e.g. John Doe"
           name="name"
-          value={resume.name}
+          value={resume?.name}
           className="p-2 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -161,7 +169,7 @@ export default function FormComponent({ setParentResume }: any) {
         <input
           placeholder="e.g. Software Engineer"
           name="job"
-          value={resume.job}
+          value={resume?.job}
           className="p-2 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />

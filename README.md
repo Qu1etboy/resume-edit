@@ -4,9 +4,10 @@ A better resume maker (old version can be found [here](https://github.com/Qu1etb
 
 ## Stack
 
-- Next.js
-- NextAuth
-- TailwindCSS
+- **Framework**: Next.js
+- **Authentication**: NextAuth
+- **Database**: MongoDB
+- **Styling**: TailwindCSS
 
 ## Preview
 
