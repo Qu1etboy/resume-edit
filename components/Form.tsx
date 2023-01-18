@@ -9,7 +9,7 @@ export default function Form({
   const [value, setValue] = useState(currValue);
   const [openForm, setOpenForm] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
@@ -36,13 +36,23 @@ export default function Form({
             {form.fields.map((field: any, idx: number) => (
               <div key={idx}>
                 <label>{field.label}</label>
-                <input
-                  placeholder={field.placeHolder}
-                  name={field.name}
-                  onChange={handleChange}
-                  className="p-2 mb-3 border rounded-md w-full"
-                  value={value[field.name]}
-                />
+                {field.type === "text" ? (
+                  <input
+                    placeholder={field.placeHolder}
+                    name={field.name}
+                    onChange={handleChange}
+                    className="p-2 mb-3 border rounded-md w-full"
+                    value={value[field.name]}
+                  />
+                ) : (
+                  <textarea
+                    placeholder={field.placeHolder}
+                    name={field.name}
+                    onChange={handleChange}
+                    className="p-2 mb-3 border rounded-md w-full"
+                    value={value[field.name]}
+                  ></textarea>
+                )}
               </div>
             ))}
           </div>
