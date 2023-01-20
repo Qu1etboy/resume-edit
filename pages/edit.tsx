@@ -1,17 +1,9 @@
 import ResumeComponent from "@/components/Resume";
+import FormComponent from "@/components/FormComponent";
 import type { Resume } from "@/lib/types";
-import { useState } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import Head from "next/head";
-import { useSession } from "next-auth/react";
-
-// disable ssr on form component
-const DynamicFormComponent = dynamic(
-  () => import("@/components/FormComponent"),
-  {
-    ssr: false,
-  }
-);
+import { useSession, getSession } from "next-auth/react";
 
 export default function EditResume() {
   const [resume, setResume] = useState<Resume>({
@@ -24,6 +16,30 @@ export default function EditResume() {
 
   const { data: session } = useSession();
   const [isEdit, setEdit] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      // client side use getSession()
+      const session = await getSession();
+      const res = await fetch(
+        `http://localhost:3000/api/resume?id=${session?.user?.id}`
+      );
+      const data = await res.json();
+      setResume(() =>
+        data === null
+          ? {
+              name: "",
+              job: "",
+              address: "",
+              email: "",
+              phone: "",
+            }
+          : data
+      );
+    };
+
+    getData();
+  }, []);
 
   const handleSave = async () => {
     try {
@@ -41,13 +57,21 @@ export default function EditResume() {
     }
   };
 
+  const handleSetResume = (resume: Resume) => {
+    setResume(resume);
+  };
+
   return (
     <main className="flex ">
       <Head>
         <title>Resume Editor</title>
       </Head>
       <section className="w-full print:hidden">
-        <DynamicFormComponent setParentResume={setResume} setEdit={setEdit} />
+        <FormComponent
+          resume={resume}
+          setResume={handleSetResume}
+          setEdit={setEdit}
+        />
       </section>
       <section className="hidden lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 print:p-0 border print:border-0 bg-slate-400">
         <div className="print:hidden">

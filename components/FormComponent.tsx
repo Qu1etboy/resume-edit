@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import AddFormButton from "./AddFormButton";
 import Form from "./Form";
 import type { Resume } from "@/lib/types";
-import { useSession } from "next-auth/react";
 
 const resumeForm = [
   {
@@ -143,16 +142,15 @@ const resumeForm = [
   },
 ];
 
-export default function FormComponent({ setParentResume, setEdit }: any) {
-  const { data: session } = useSession();
-  const [resume, setResume] = useState<Resume>({
-    name: "",
-    job: "",
-    address: "",
-    email: "",
-    phone: "",
-  });
-
+export default function FormComponent({
+  resume,
+  setResume,
+  setEdit,
+}: {
+  resume: Resume;
+  setResume: (r: Resume) => void;
+  setEdit: (e: boolean) => void;
+}) {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setResume({ ...resume, [name]: value });
@@ -183,27 +181,7 @@ export default function FormComponent({ setParentResume, setEdit }: any) {
   };
 
   useEffect(() => {
-    const getData = async () => {
-      const res = await fetch(
-        `http://localhost:3000/api/resume?id=${session?.user?.id}`
-      );
-      const data = await res.json();
-      setResume(() =>
-        data === null
-          ? {
-              name: "",
-              job: "",
-            }
-          : data
-      );
-    };
-
-    getData();
-  }, []);
-
-  useEffect(() => {
     setEdit(true);
-    setParentResume(resume);
   }, [resume]);
 
   return (
