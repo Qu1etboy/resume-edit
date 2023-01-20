@@ -17,6 +17,9 @@ export default function EditResume() {
   const [resume, setResume] = useState<Resume>({
     name: "",
     job: "",
+    address: "",
+    email: "",
+    phone: "",
   });
 
   const { data: session } = useSession();
@@ -46,7 +49,7 @@ export default function EditResume() {
       <section className="w-full print:hidden">
         <DynamicFormComponent setParentResume={setResume} setEdit={setEdit} />
       </section>
-      <section className="hidden lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 border print:border-0 bg-slate-400">
+      <section className="hidden lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 print:p-0 border print:border-0 bg-slate-400">
         <div className="print:hidden">
           <button
             type="button"

@@ -12,39 +12,53 @@ export default function Resume({ resume }: { resume: Resume }) {
   return (
     <div className="bg-white p-10 rounded-md shadow-xl print:p-0 print:shadow-none">
       <h1 className="text-3xl font-bold">{resume.name}</h1>
-      <h2 className="text-lg font-semibold mb-2">{resume.job}</h2>
+      <h2 className="text-lg font-semibold mb-2 border-b pb-5 border-black">
+        {resume.job}
+      </h2>
       <section className="mb-3 text-sm">
-        <ul>
-          {resume["contacts"]?.map((contact: Contact, idx: number) => (
-            <li key={idx}>
-              <span className="font-semibold">{contact.label}</span>
-              {": "}
-              {contact.link}
+        <ul className="flex flex-wrap">
+          {resume.address && <li className="mr-5">{resume.address}</li>}
+          {resume.email && <li className="mr-5">{resume.email}</li>}
+          {resume.phone && <li className="mr-5">{resume.phone}</li>}
+          {resume["links"]?.map((contact: Contact, idx: number) => (
+            <li key={idx} className="mr-5 text-sm">
+              <a
+                href={`https://${contact.link?.replace(/^https?:\/\//i, "")}`}
+                className="underline"
+              >
+                {contact.label}
+              </a>
             </li>
           ))}
         </ul>
       </section>
       {resume["skills"] && resume["skills"].length > 0 && (
         <section className="mb-3">
-          <h1 className="text-lg font-bold border-b border-black mb-2">
-            Technologies and Languague
-          </h1>
+          <h2 className="text-lg font-bold border-b border-black mb-2">
+            Skills
+          </h2>
           <ul className="list-disc ml-5">
             {resume["skills"]?.map((skill: Skill, idx: number) => (
-              <li key={idx}>{skill.skill}</li>
+              <li key={idx} className="text-sm">
+                {skill.skill}
+              </li>
             ))}
           </ul>
         </section>
       )}
       {resume["educations"] && resume["educations"].length > 0 && (
         <section className="mb-3">
-          <h1 className="text-lg font-bold border-b border-black mb-2">
+          <h2 className="text-lg font-bold border-b border-black mb-2">
             Educations
-          </h1>
-          <ul>
+          </h2>
+          <ul className="list-disc ml-5">
             {resume["educations"]?.map((education: Education, idx: number) => (
-              <li key={idx}>
-                {education.schoolDescr}, {education.schoolName}
+              <li key={idx} className="text-sm">
+                <h3>
+                  <b className="font-semibold">{education.degree}</b>,{" "}
+                  {education.schoolName} {education.date}
+                </h3>
+                <p>{education.schoolDescr}</p>
               </li>
             ))}
           </ul>
@@ -52,25 +66,29 @@ export default function Resume({ resume }: { resume: Resume }) {
       )}
       {resume["workExps"] && resume["workExps"].length > 0 && (
         <section className="mb-3">
-          <h1 className="text-lg font-bold border-b border-black mb-2">
+          <h2 className="text-lg font-bold border-b border-black mb-2">
             Work Experience
-          </h1>
+          </h2>
           {resume["workExps"]?.map((workExp: WorkExp, idx: number) => (
-            <div key={idx}>
-              <h2>{workExp.jobTitle}</h2>
-              <h2>{workExp.workDescr}</h2>
+            <div key={idx} className="mb-3">
+              <div className="grid grid-cols-3 font-semibold text-sm">
+                <h3>{workExp.jobTitle}</h3>
+                <h3 className="underline text-center">{workExp.companyName}</h3>
+                <h3 className="text-right">{workExp.date}</h3>
+              </div>
+              <p className="text-sm">{workExp.workDescr}</p>
             </div>
           ))}
         </section>
       )}
       {resume["projects"] && resume["projects"].length > 0 && (
         <section className="mb-3">
-          <h1 className="text-lg font-bold border-b border-black mb-2">
+          <h2 className="text-lg font-bold border-b border-black mb-2">
             Projects
-          </h1>
+          </h2>
           <ul className="list-disc ml-5">
             {resume["projects"]?.map((project: Project, idx: number) => (
-              <li key={idx}>
+              <li key={idx} className="text-sm">
                 <span className="font-semibold">{project.projectName}</span> -{" "}
                 {project.projectDescr}
               </li>
@@ -80,10 +98,10 @@ export default function Resume({ resume }: { resume: Resume }) {
       )}
       {resume["interests"] && resume["interests"].length > 0 && (
         <section className="">
-          <h1 className="text-lg font-bold border-b border-black mb-2">
+          <h2 className="text-lg font-bold border-b border-black mb-2">
             Interests
-          </h1>
-          <ul className="list-disc ml-5">
+          </h2>
+          <ul className="list-disc ml-5 text-sm">
             {resume["interests"]?.map((interest: Interest, idx: number) => (
               <li key={idx}>{interest.interest}</li>
             ))}

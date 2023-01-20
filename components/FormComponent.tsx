@@ -6,8 +6,8 @@ import { useSession } from "next-auth/react";
 
 const resumeForm = [
   {
-    label: "Contacts",
-    name: "contacts",
+    label: "Links",
+    name: "links",
     fields: [
       {
         label: "Label",
@@ -36,6 +36,18 @@ const resumeForm = [
         type: "text",
       },
       {
+        label: "Degree",
+        name: "degree",
+        placeHolder: "e.g. B.S. Computer Science",
+        type: "text",
+      },
+      {
+        label: "Start - End Date",
+        name: "date",
+        placeHolder: "e.g. 2021-2024",
+        type: "text",
+      },
+      {
         label: "Description",
         name: "schoolDescr",
         placeHolder: "e.g. B.S. Computer Science",
@@ -59,6 +71,12 @@ const resumeForm = [
         label: "Job Title",
         name: "jobTitle",
         placeHolder: "e.g. Software Engineer",
+        type: "text",
+      },
+      {
+        label: "Start - End Date",
+        name: "date",
+        placeHolder: "e.g. May 2023 - Jun 2023",
         type: "text",
       },
       {
@@ -130,6 +148,9 @@ export default function FormComponent({ setParentResume, setEdit }: any) {
   const [resume, setResume] = useState<Resume>({
     name: "",
     job: "",
+    address: "",
+    email: "",
+    phone: "",
   });
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -202,6 +223,30 @@ export default function FormComponent({ setParentResume, setEdit }: any) {
           placeholder="e.g. Software Engineer"
           name="job"
           value={resume?.job}
+          className="p-2 mb-3 border rounded-md w-full"
+          onChange={handleInput}
+        />
+        <label>Address</label>
+        <input
+          placeholder="your address"
+          name="address"
+          value={resume?.address}
+          className="p-2 mb-3 border rounded-md w-full"
+          onChange={handleInput}
+        />
+        <label>Email</label>
+        <input
+          placeholder="e.g. name@mail.com"
+          name="email"
+          value={resume?.email}
+          className="p-2 mb-3 border rounded-md w-full"
+          onChange={handleInput}
+        />
+        <label>Phone</label>
+        <input
+          placeholder="e.g. 098-xxx-xxx"
+          name="phone"
+          value={resume?.phone}
           className="p-2 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />

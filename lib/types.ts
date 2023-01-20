@@ -12,6 +12,8 @@ export type Skill = {
 export type Education = {
   id: string;
   schoolName: string;
+  degree: string;
+  date: string;
   schoolDescr: string;
 };
 
@@ -19,6 +21,7 @@ export type WorkExp = {
   id: string;
   companyName: string;
   jobTitle: string;
+  date: string;
   workDescr: string;
 };
 
