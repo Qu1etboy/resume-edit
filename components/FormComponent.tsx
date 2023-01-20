@@ -188,44 +188,44 @@ export default function FormComponent({
     <form className="h-screen overflow-scroll p-8 flex flex-col gap-3">
       <div>
         <h2 className="text-lg mb-3 font-bold">Personal Information</h2>
-        <label>Name</label>
+        <label className="text-gray-500 text-sm">Name</label>
         <input
           placeholder="e.g. John Doe"
           name="name"
           value={resume?.name}
-          className="p-2 mb-3 border rounded-md w-full"
+          className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
-        <label>Job Title</label>
+        <label className="text-gray-500 text-sm">Job Title</label>
         <input
           placeholder="e.g. Software Engineer"
           name="job"
           value={resume?.job}
-          className="p-2 mb-3 border rounded-md w-full"
+          className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
-        <label>Address</label>
+        <label className="text-gray-500 text-sm">Address</label>
         <input
           placeholder="your address"
           name="address"
           value={resume?.address}
-          className="p-2 mb-3 border rounded-md w-full"
+          className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
-        <label>Email</label>
+        <label className="text-gray-500 text-sm">Email</label>
         <input
           placeholder="e.g. name@mail.com"
           name="email"
           value={resume?.email}
-          className="p-2 mb-3 border rounded-md w-full"
+          className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
-        <label>Phone</label>
+        <label className="text-gray-500 text-sm">Phone</label>
         <input
           placeholder="e.g. 098-xxx-xxx"
           name="phone"
           value={resume?.phone}
-          className="p-2 mb-3 border rounded-md w-full"
+          className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
       </div>
