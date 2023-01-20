@@ -4,15 +4,10 @@ import type { Resume } from "@/lib/types";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/react";
+import ResumeSkeletion from "@/components/ResumeSkeletion";
 
 export default function EditResume() {
-  const [resume, setResume] = useState<Resume>({
-    name: "",
-    job: "",
-    address: "",
-    email: "",
-    phone: "",
-  });
+  const [resume, setResume] = useState<Resume | null>(null);
 
   const { data: session } = useSession();
   const [isEdit, setEdit] = useState(false);
@@ -67,11 +62,13 @@ export default function EditResume() {
         <title>Resume Editor</title>
       </Head>
       <section className="w-full print:hidden">
-        <FormComponent
-          resume={resume}
-          setResume={handleSetResume}
-          setEdit={setEdit}
-        />
+        {resume !== null && (
+          <FormComponent
+            resume={resume}
+            setResume={handleSetResume}
+            setEdit={setEdit}
+          />
+        )}
       </section>
       <section className="hidden lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 print:p-0 border print:border-0 bg-slate-400">
         <div className="print:hidden">
@@ -93,7 +90,11 @@ export default function EditResume() {
             {isEdit ? "Not Saved" : "Saved!"}
           </span>
         </div>
-        <ResumeComponent resume={resume as Resume} />
+        {resume !== null ? (
+          <ResumeComponent resume={resume as Resume} />
+        ) : (
+          <ResumeSkeletion />
+        )}
       </section>
     </main>
   );
