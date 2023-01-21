@@ -4,12 +4,14 @@ A better resume maker (old version can be found [here](https://github.com/Qu1etb
 
 ## Stack
 
-- **Framework**: Next.js
-- **Authentication**: NextAuth
-- **Database**: MongoDB
-- **Styling**: TailwindCSS
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Authentication**: [NextAuth](https://next-auth.js.org/)
+- **Database**: [MongoDB](https://www.mongodb.com/)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/)
 
 ## Preview
+
+![](docs/landing_page.png)
 
 ![](docs/preview.png)
 
