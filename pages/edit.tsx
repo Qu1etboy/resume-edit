@@ -90,11 +90,13 @@ export default function EditResume() {
             {isEdit ? "Not Saved" : "Saved!"}
           </span>
         </div>
-        {resume !== null ? (
-          <ResumeComponent resume={resume as Resume} />
-        ) : (
-          <ResumeSkeletion />
-        )}
+        <div className="bg-white mt-2 overflow-hidden rounded-md shadow-xl print:shadow-none">
+          {resume !== null ? (
+            <ResumeComponent resume={resume as Resume} />
+          ) : (
+            <ResumeSkeletion />
+          )}
+        </div>
       </section>
     </main>
   );

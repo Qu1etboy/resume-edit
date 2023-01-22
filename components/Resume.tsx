@@ -10,7 +10,7 @@ import type {
 
 export default function Resume({ resume }: { resume: Resume }) {
   return (
-    <div className="bg-white p-10 rounded-md shadow-xl print:p-0 print:shadow-none">
+    <div className="p-10 print:p-0">
       <h1 className="text-3xl font-bold">{resume.name}</h1>
       <h2 className="text-lg font-semibold mb-2 border-b pb-5 border-black">
         {resume.job}
