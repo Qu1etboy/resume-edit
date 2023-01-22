@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/lib/mongodb";
+import CryptoJS from "crypto-js";
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,10 +17,26 @@ export default async function handler(
       _id: id,
     });
 
-    return res.status(200).json(result);
+    // decrypyt resume
+    const bytes = CryptoJS.AES.decrypt(
+      result?.resume,
+      process.env.SECRET || "secret key"
+    );
+
+    return res.status(200).json({
+      ...result,
+      resume: JSON.parse(bytes.toString(CryptoJS.enc.Utf8)),
+    });
   }
+
   if (req.method === "POST") {
     const { resume, id } = req.body;
+
+    // encrypt resume before store in db
+    const encrypted = CryptoJS.AES.encrypt(
+      JSON.stringify(resume),
+      process.env.SECRET || "secret key"
+    ).toString();
 
     const result = await db.collection("resumes").updateOne(
       {
@@ -27,7 +44,7 @@ export default async function handler(
       },
       {
         $set: {
-          ...resume,
+          resume: encrypted,
           _id: id,
         },
       },

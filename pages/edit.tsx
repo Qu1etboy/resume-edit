@@ -29,7 +29,7 @@ export default function EditResume() {
               email: "",
               phone: "",
             }
-          : data
+          : data.resume
       );
     };
 
