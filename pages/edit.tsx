@@ -20,8 +20,9 @@ export default function EditResume() {
         `http://localhost:3000/api/resume?id=${session?.user?.id}`
       );
       const data = await res.json();
+
       setResume(() =>
-        data === null
+        data === null || data.resume === undefined
           ? {
               name: "",
               job: "",

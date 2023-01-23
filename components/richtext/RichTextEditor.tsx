@@ -6,6 +6,7 @@ import {
   createEditor,
   Element as SlateElement,
   BaseEditor,
+  Descendant,
 } from "slate";
 import { Slate, Editable, withReact, useSlate, ReactEditor } from "slate-react";
 import Icon from "./Icon";
@@ -29,7 +30,17 @@ const HOTKEYS: any = {
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 
-export default function RichTextEditor({ value }: { value: string }) {
+const initialValue = [{ type: "paragraph", children: [{ text: "" }] }];
+
+export default function RichTextEditor({
+  value,
+  name,
+  onChange,
+}: {
+  value: Descendant[];
+  name: string;
+  onChange: (v: any, n: string) => void;
+}) {
   const [editor] = useState(() => withReact(createEditor()));
   const renderElement = useCallback((props: any) => <Element {...props} />, []);
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
@@ -38,16 +49,10 @@ export default function RichTextEditor({ value }: { value: string }) {
     <div className="border rounded-md">
       <Slate
         editor={editor}
-        value={
-          [
-            {
-              type: "paragraph",
-              children: [{ text: value }],
-            },
-          ] as any
-        }
+        value={value || initialValue}
         onChange={(value) => {
-          console.log(value);
+          console.log(value, name);
+          onChange(value, name);
         }}
       >
         <Toolbar />

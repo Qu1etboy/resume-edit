@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createEditor } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import RichTextEditor from "./richtext/RichTextEditor";
@@ -11,9 +11,12 @@ export default function Form({
 }: any) {
   const [value, setValue] = useState(currValue);
   const [openForm, setOpenForm] = useState(false);
-  const [editor] = useState(() => withReact(createEditor()));
 
-  const handleChange = (e: React.ChangeEvent<any>) => {
+  const handleChangeEditor = (richText: any, name: string) => {
+    setValue({ ...value, [name]: richText });
+  };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
@@ -70,19 +73,16 @@ export default function Form({
                   <input
                     placeholder={field.placeHolder}
                     name={field.name}
-                    onChange={handleChange}
+                    onChange={handleChangeInput}
                     className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
                     value={value[field.name]}
                   />
                 ) : (
-                  <RichTextEditor value={value[field.name]} />
-                  // <textarea
-                  //   placeholder={field.placeHolder}
-                  //   name={field.name}
-                  //   onChange={handleChange}
-                  //   className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
-                  //   value={value[field.name]}
-                  // ></textarea>
+                  <RichTextEditor
+                    value={value[field.name]}
+                    name={field.name}
+                    onChange={handleChangeEditor}
+                  />
                 )}
               </div>
             ))}

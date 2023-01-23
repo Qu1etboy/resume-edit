@@ -14,7 +14,7 @@ export type Education = {
   schoolName: string;
   degree: string;
   date: string;
-  schoolDescr: string;
+  schoolDescr: any;
 };
 
 export type WorkExp = {
@@ -22,13 +22,13 @@ export type WorkExp = {
   companyName: string;
   jobTitle: string;
   date: string;
-  workDescr: string;
+  workDescr: any;
 };
 
 export type Project = {
   id: string;
   projectName: string;
-  projectDescr: string;
+  projectDescr: any;
 };
 
 export type Interest = {

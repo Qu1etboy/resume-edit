@@ -17,6 +17,14 @@ export default async function handler(
       _id: id,
     });
 
+    if (result === null) {
+      return res.status(200).json(result);
+    }
+
+    if (result?.resume === undefined) {
+      return res.status(200).json(result);
+    }
+
     // decrypyt resume
     const bytes = CryptoJS.AES.decrypt(
       result?.resume,

@@ -7,6 +7,7 @@ import type {
   Skill,
   WorkExp,
 } from "@/lib/types";
+import RichTextRenderer from "./richtext/RichTextRenderer";
 
 export default function Resume({ resume }: { resume: Resume }) {
   return (
@@ -37,7 +38,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           <h2 className="text-lg font-bold border-b border-black mb-2">
             Skills
           </h2>
-          <ul className="list-disc ml-5">
+          <ul className="list-disc ml-3">
             {resume["skills"]?.map((skill: Skill, idx: number) => (
               <li key={idx} className="text-sm">
                 {skill.skill}
@@ -51,14 +52,14 @@ export default function Resume({ resume }: { resume: Resume }) {
           <h2 className="text-lg font-bold border-b border-black mb-2">
             Educations
           </h2>
-          <ul className="list-disc ml-5">
+          <ul className="list-disc ml-3">
             {resume["educations"]?.map((education: Education, idx: number) => (
               <li key={idx} className="text-sm">
                 <h3>
                   <b className="font-semibold">{education.degree}</b>,{" "}
                   {education.schoolName} {education.date}
                 </h3>
-                <p>{education.schoolDescr}</p>
+                <RichTextRenderer text={education.schoolDescr} />
               </li>
             ))}
           </ul>
@@ -76,7 +77,9 @@ export default function Resume({ resume }: { resume: Resume }) {
                 <h3 className="underline text-center">{workExp.companyName}</h3>
                 <h3 className="text-right">{workExp.date}</h3>
               </div>
-              <p className="text-sm">{workExp.workDescr}</p>
+              <div className="ml-3">
+                <RichTextRenderer text={workExp.workDescr} />
+              </div>
             </div>
           ))}
         </section>
