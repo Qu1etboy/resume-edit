@@ -1,10 +1,11 @@
+import Container from "@/components/Container";
 import Footer from "@/components/home/Footer";
 import Navbar from "@/components/home/Navbar";
 import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main>
+    <Container title="404 Not Found - Resume Edit">
       <Navbar />
       <section className="bg-white">
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
@@ -29,6 +30,6 @@ export default function NotFound() {
         </div>
       </section>
       <Footer />
-    </main>
+    </Container>
   );
 }

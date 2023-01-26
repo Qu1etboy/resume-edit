@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useSession, getSession } from "next-auth/react";
 import ResumeSkeletion from "@/components/ResumeSkeletion";
+import Container from "@/components/Container";
 
 export default function EditResume() {
   const [resume, setResume] = useState<Resume | null>(null);
@@ -60,10 +61,7 @@ export default function EditResume() {
   };
 
   return (
-    <main className="flex ">
-      <Head>
-        <title>Resume Editor</title>
-      </Head>
+    <Container title="Resume Editor" className="flex">
       <section className="w-full print:hidden">
         {resume !== null && (
           <FormComponent
@@ -111,6 +109,6 @@ export default function EditResume() {
       >
         {openPreview ? "Edit" : "Preview"}
       </button>
-    </main>
+    </Container>
   );
 }

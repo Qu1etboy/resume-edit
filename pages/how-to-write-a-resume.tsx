@@ -1,9 +1,13 @@
+import Container from "@/components/Container";
 import Footer from "@/components/home/Footer";
 import Navbar from "@/components/home/Navbar";
 
 export default function HowToWriteAResume() {
   return (
-    <main className="flex flex-col min-h-screen">
+    <Container
+      title="How to write a resume - Resume Edit"
+      className="flex flex-col min-h-screen"
+    >
       <Navbar />
       <section className="container mx-auto w-full max-w-2xl p-3 lg:p-0">
         <div className="mb-8">
@@ -35,6 +39,6 @@ export default function HowToWriteAResume() {
         </article>
       </section>
       <Footer />
-    </main>
+    </Container>
   );
 }
