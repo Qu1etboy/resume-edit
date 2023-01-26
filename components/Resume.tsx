@@ -56,7 +56,7 @@ export default function Resume({ resume }: { resume: Resume }) {
             {resume["educations"]?.map((education: Education, idx: number) => (
               <li key={idx} className="text-sm">
                 <h3>
-                  <b className="font-semibold">{education.degree}</b>,{" "}
+                  <b className="font-bold">{education.degree}</b>,{" "}
                   {education.schoolName} {education.date}
                 </h3>
                 <RichTextRenderer text={education.schoolDescr} />
@@ -72,12 +72,12 @@ export default function Resume({ resume }: { resume: Resume }) {
           </h2>
           {resume["workExps"]?.map((workExp: WorkExp, idx: number) => (
             <div key={idx} className="mb-3">
-              <div className="grid grid-cols-3 font-semibold text-sm">
+              <div className="grid grid-cols-3 font-bold text-sm">
                 <h3>{workExp.jobTitle}</h3>
                 <h3 className="underline text-center">{workExp.companyName}</h3>
                 <h3 className="text-right">{workExp.date}</h3>
               </div>
-              <div className="ml-3">
+              <div className="ml-3 text-sm">
                 <RichTextRenderer text={workExp.workDescr} />
               </div>
             </div>
@@ -92,8 +92,8 @@ export default function Resume({ resume }: { resume: Resume }) {
           <ul className="list-disc ml-5">
             {resume["projects"]?.map((project: Project, idx: number) => (
               <li key={idx} className="text-sm">
-                <span className="font-semibold">{project.projectName}</span> -{" "}
-                {project.projectDescr}
+                <span className="font-bold">{project.projectName}</span>
+                <RichTextRenderer text={project.projectDescr} />
               </li>
             ))}
           </ul>
