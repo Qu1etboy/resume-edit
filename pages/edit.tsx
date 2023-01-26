@@ -11,6 +11,7 @@ export default function EditResume() {
 
   const { data: session } = useSession();
   const [isEdit, setEdit] = useState(false);
+  const [openPreview, setOpenPreview] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -21,6 +22,7 @@ export default function EditResume() {
       );
       const data = await res.json();
 
+      // if there is no data or resume data is undefined used initial value
       setResume(() =>
         data === null || data.resume === undefined
           ? {
@@ -71,7 +73,11 @@ export default function EditResume() {
           />
         )}
       </section>
-      <section className="hidden lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 print:p-0 border print:border-0 bg-slate-400">
+      <section
+        className={`${
+          openPreview ? "block" : "hidden"
+        } fixed lg:relative lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 print:p-0 print:border-0 bg-slate-400`}
+      >
         <div className="print:hidden">
           <button
             type="button"
@@ -99,6 +105,12 @@ export default function EditResume() {
           )}
         </div>
       </section>
+      <button
+        onClick={() => setOpenPreview(!openPreview)}
+        className="fixed bottom-0 right-0 lg:hidden text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base drop-shadow-xl border px-5 py-2.5 text-center mr-2 mb-2"
+      >
+        {openPreview ? "Edit" : "Preview"}
+      </button>
     </main>
   );
 }
