@@ -2,7 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return (
     <header>
@@ -30,7 +30,15 @@ export default function Navbar() {
                 </li>
               </ul>
             </div>
-            {session ? (
+
+            {status === "loading" ? (
+              <button
+                onClick={() => signOut()}
+                className="invisible text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+              >
+                Loading...
+              </button>
+            ) : session ? (
               <button
                 onClick={() => signOut()}
                 className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
@@ -53,6 +61,7 @@ export default function Navbar() {
                 </Link>
               </>
             )}
+
             <button
               type="button"
               className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
