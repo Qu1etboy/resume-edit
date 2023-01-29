@@ -11,10 +11,10 @@ export default async function handler(
   const db = client.db("resumes");
 
   if (req.method === "GET") {
-    const { id } = req.query;
+    const { uid, id } = req.query;
 
     const result = await db.collection("resumes").findOne({
-      _id: id,
+      $or: [{ uid: uid }, { _id: id }],
     });
 
     if (result === null) {
@@ -38,7 +38,7 @@ export default async function handler(
   }
 
   if (req.method === "POST") {
-    const { resume, id } = req.body;
+    const { resume, uid, id } = req.body;
 
     // encrypt resume before store in db
     const encrypted = CryptoJS.AES.encrypt(
@@ -48,12 +48,12 @@ export default async function handler(
 
     const result = await db.collection("resumes").updateOne(
       {
-        _id: id,
+        _id: id ?? crypto.randomUUID(),
       },
       {
         $set: {
           resume: encrypted,
-          _id: id,
+          uid: uid,
         },
       },
       {

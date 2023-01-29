@@ -30,7 +30,7 @@ export default function ShareModal({
   }, []);
 
   return (
-    <div className="fixed flex justify-center items-center inset-0 w-full border border-red-500">
+    <div className="fixed flex justify-center items-center inset-0 w-full">
       <div
         className="z-10 relative w-full max-w-md bg-white p-5 rounded-md"
         onClick={(e) => {

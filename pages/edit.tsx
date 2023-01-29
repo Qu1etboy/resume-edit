@@ -15,13 +15,14 @@ export default function EditResume() {
   const [isEdit, setEdit] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [openShareModal, setOpenShareModal] = useState(false);
+  const [collection, setCollection] = useState<any>({});
 
   useEffect(() => {
     const getData = async () => {
       // client side use getSession()
       const session = await getSession();
       const res = await fetch(
-        `http://localhost:3000/api/resume?id=${session?.user?.id}`
+        `http://localhost:3000/api/resume?uid=${session?.user?.id}`
       );
       const data = await res.json();
 
@@ -37,6 +38,8 @@ export default function EditResume() {
             }
           : data.resume
       );
+
+      setCollection(data);
     };
 
     getData();
@@ -46,7 +49,11 @@ export default function EditResume() {
     try {
       await fetch("http://localhost:3000/api/resume", {
         method: "POST",
-        body: JSON.stringify({ resume, id: session?.user?.id }),
+        body: JSON.stringify({
+          resume,
+          id: collection?._id,
+          uid: session?.user?.id,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -83,15 +90,17 @@ export default function EditResume() {
         } fixed lg:relative lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 print:p-0 print:border-0 bg-slate-400`}
       >
         <div className="print:hidden">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpenShareModal(true);
-            }}
-            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          >
-            Share
-          </button>
+          {collection && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenShareModal(true);
+              }}
+              className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
+              Share
+            </button>
+          )}
           <button
             type="button"
             className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
@@ -120,7 +129,7 @@ export default function EditResume() {
       </section>
       {openShareModal && (
         <ShareModal
-          link={`http://localhost:3000/resume/${session?.user?.id}`}
+          link={`http://localhost:3000/resume/${collection?._id}`}
           setOpenShareModal={handleSetOpenShareModal}
         />
       )}
