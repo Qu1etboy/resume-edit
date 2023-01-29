@@ -2,10 +2,11 @@ import ResumeComponent from "@/components/Resume";
 import FormComponent from "@/components/FormComponent";
 import type { Resume } from "@/lib/types";
 import { useEffect, useState } from "react";
-import Head from "next/head";
 import { useSession, getSession } from "next-auth/react";
 import ResumeSkeletion from "@/components/ResumeSkeletion";
 import Container from "@/components/Container";
+import Link from "next/link";
+import ShareModal from "@/components/ShareModal";
 
 export default function EditResume() {
   const [resume, setResume] = useState<Resume | null>(null);
@@ -13,6 +14,7 @@ export default function EditResume() {
   const { data: session } = useSession();
   const [isEdit, setEdit] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
+  const [openShareModal, setOpenShareModal] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -60,6 +62,10 @@ export default function EditResume() {
     setResume(resume);
   };
 
+  const handleSetOpenShareModal = (v: boolean) => {
+    setOpenShareModal(v);
+  };
+
   return (
     <Container title="Resume Editor" className="flex">
       <section className="w-full print:hidden">
@@ -78,15 +84,24 @@ export default function EditResume() {
       >
         <div className="print:hidden">
           <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpenShareModal(true);
+            }}
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+          >
+            Share
+          </button>
+          <button
             type="button"
-            className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             onClick={() => print()}
           >
             Download PDF
           </button>
           <button
             type="button"
-            className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             onClick={handleSave}
           >
             Save
@@ -103,6 +118,12 @@ export default function EditResume() {
           )}
         </div>
       </section>
+      {openShareModal && (
+        <ShareModal
+          link={`http://localhost:3000/resume/${session?.user?.id}`}
+          setOpenShareModal={handleSetOpenShareModal}
+        />
+      )}
       <button
         onClick={() => setOpenPreview(!openPreview)}
         className="fixed bottom-0 right-0 lg:hidden text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base drop-shadow-xl border px-5 py-2.5 text-center mr-2 mb-2"
