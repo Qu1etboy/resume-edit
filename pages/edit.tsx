@@ -132,7 +132,7 @@ export default function EditResume() {
       </section>
       {openShareModal && (
         <ShareModal
-          link={`http://localhost:3000/resume/${collection?._id}`}
+          link={`${process.env.NEXT_PUBLIC_API_URL}/resume/${collection?._id}`}
           setOpenShareModal={handleSetOpenShareModal}
         />
       )}
