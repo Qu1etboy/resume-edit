@@ -18,27 +18,31 @@ export default function EditResume() {
 
   useEffect(() => {
     const getData = async () => {
-      // client side use getSession()
-      const session = await getSession();
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/resume?uid=${session?.user?.id}`
-      );
-      const data = await res.json();
+      try {
+        // client side use getSession()
+        const session = await getSession();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/resume?uid=${session?.user?.id}`
+        );
+        const data = await res.json();
 
-      // if there is no data or resume data is undefined used initial value
-      setResume(() =>
-        data === null || data.resume === undefined
-          ? {
-              name: "",
-              job: "",
-              address: "",
-              email: "",
-              phone: "",
-            }
-          : data.resume
-      );
+        // if there is no data or resume data is undefined used initial value
+        setResume(() =>
+          data === null || data.resume === undefined
+            ? {
+                name: "",
+                job: "",
+                address: "",
+                email: "",
+                phone: "",
+              }
+            : data.resume
+        );
 
-      setCollection(data);
+        setCollection(data);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     getData();

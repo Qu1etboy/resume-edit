@@ -14,23 +14,40 @@ export default function ResumePage({
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
+    const data = await res.json();
 
-  return {
-    paths: data.map((d: any) => ({ params: { id: d._id } })),
-    fallback: false,
-  };
+    return {
+      paths: data.map((d: any) => ({ params: { id: d._id } })),
+      fallback: false,
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      paths: [],
+      fallback: false,
+    };
+  }
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/resume?id=${params?.id}`
-  );
-  const data = await res.json();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/resume?id=${params?.id}`
+    );
+    const data = await res.json();
 
-  return {
-    // Passed to the page component as props
-    props: { resume: data.resume },
-  };
+    return {
+      // Passed to the page component as props
+      props: { resume: data.resume },
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      notFound: true,
+    };
+  }
 }
