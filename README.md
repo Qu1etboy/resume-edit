@@ -1,13 +1,20 @@
 # Resume Edit V2
 
-A better resume maker (old version can be found [here](https://github.com/Qu1etboy/resume.edit)) _currently work in progress_
+[![Deploy with Vercel](https://vercel.com/button)](https://resume-edit-v2.vercel.app/)
+
+A better resume maker (old version can be found [here](https://github.com/Qu1etboy/resume.edit))
 
 ## Stack
 
 - **Framework**: [Next.js](https://nextjs.org/)
 - **Authentication**: [NextAuth](https://next-auth.js.org/)
-- **Database**: [MongoDB](https://www.mongodb.com/)
+- **Database**: [MongoDB](https://www.mongodb.com/), [Railway](https://railway.app/)
 - **Styling**: [TailwindCSS](https://tailwindcss.com/)
+- **Deployment** [Vercel](https://vercel.com/)
+
+## TODO
+
+- [ ] Provide more resume template to should from
 
 ## Preview
 
@@ -15,16 +22,20 @@ A better resume maker (old version can be found [here](https://github.com/Qu1etb
 
 ![](docs/preview.png)
 
-## Getting Started
+## Running Locally
 
-First, run the development server:
+- Install dependencies
+
+```bash
+npm install
+```
+
+- Setup `.env` similarly to `.env.example`
+
+- Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
