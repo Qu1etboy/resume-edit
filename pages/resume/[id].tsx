@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/resume?id=${params?.id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/resume?id=${params?.id}`
   );
   const data = await res.json();
 
