@@ -14,7 +14,7 @@ export default function ResumePage({
 }
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/resumes");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
   const data = await res.json();
 
   return {
@@ -24,7 +24,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const res = await fetch(`http://localhost:3000/api/resume?id=${params?.id}`);
+  const res = await fetch(
+    `${process.env.NEXTAUTH_URL}/api/resume?id=${params?.id}`
+  );
   const data = await res.json();
 
   return {

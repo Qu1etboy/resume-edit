@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useSession, getSession } from "next-auth/react";
 import ResumeSkeletion from "@/components/ResumeSkeletion";
 import Container from "@/components/Container";
-import Link from "next/link";
 import ShareModal from "@/components/ShareModal";
 
 export default function EditResume() {
@@ -22,7 +21,7 @@ export default function EditResume() {
       // client side use getSession()
       const session = await getSession();
       const res = await fetch(
-        `http://localhost:3000/api/resume?uid=${session?.user?.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/resume?uid=${session?.user?.id}`
       );
       const data = await res.json();
 
@@ -47,7 +46,7 @@ export default function EditResume() {
 
   const handleSave = async () => {
     try {
-      await fetch("http://localhost:3000/api/resume", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resume`, {
         method: "POST",
         body: JSON.stringify({
           resume,
