@@ -14,7 +14,7 @@ A better resume maker (old version can be found [here](https://github.com/Qu1etb
 
 ## TODO
 
-- [ ] Provide more resume template to should from
+- [ ] Provide more resume template to choose from
 
 ## Preview
 
