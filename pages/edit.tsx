@@ -149,7 +149,7 @@ export default function EditResume() {
       )}
       <button
         onClick={() => setOpenPreview(!openPreview)}
-        className="fixed bottom-0 right-0 lg:hidden text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base drop-shadow-xl border px-5 py-2.5 text-center mr-2 mb-2"
+        className="fixed bottom-0 right-0 lg:hidden print:hidden text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base drop-shadow-xl border px-5 py-2.5 text-center mr-2 mb-2"
       >
         {openPreview ? "Edit" : "Preview"}
       </button>
