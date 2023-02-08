@@ -6,10 +6,11 @@ import { useSession, getSession } from "next-auth/react";
 import ResumeSkeletion from "@/components/ResumeSkeletion";
 import Container from "@/components/Container";
 import ShareModal from "@/components/ShareModal";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function EditResume() {
   const [resume, setResume] = useState<Resume | null>(null);
-
+  const [isLoading, setLoading] = useState(false);
   const { data: session } = useSession();
   const [isEdit, setEdit] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
@@ -50,6 +51,7 @@ export default function EditResume() {
 
   const handleSave = async () => {
     try {
+      setLoading(true);
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resume`, {
         method: "POST",
         body: JSON.stringify({
@@ -63,6 +65,7 @@ export default function EditResume() {
       });
 
       setEdit(false);
+      setLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -119,7 +122,15 @@ export default function EditResume() {
             Save
           </button>
           <span className="text-gray-100">
-            {isEdit ? "Not Saved" : "Saved!"}
+            {isLoading ? (
+              <>
+                <LoadingSpinner /> <span>Saving...</span>
+              </>
+            ) : isEdit ? (
+              "Not Saved"
+            ) : (
+              "Saved"
+            )}
           </span>
         </div>
         <div className="bg-white mt-2 overflow-hidden rounded-md shadow-xl print:shadow-none">
