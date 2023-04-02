@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Resume {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  uid  String @unique
+  data Data?
+}
+
+model Data {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  job       String
+  address   String
+  email     String
+  phone     String
+  contact   Contact[]
+  skill     Skill[]
+  education Education[]
+  workExp   WorkExp[]
+  project   Project[]
+  interest  Interest[]
+  resumeId  String      @unique @db.ObjectId
+  resume    Resume      @relation(fields: [resumeId], references: [id])
+}
+
+model Contact {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  label  String
+  link   String
+  dataId String @db.ObjectId
+  data   Data   @relation(fields: [dataId], references: [id])
+}
+
+model Skill {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  skill  String
+  dataId String @db.ObjectId
+  data   Data   @relation(fields: [dataId], references: [id])
+}
+
+model Education {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  schoolName  String
+  degree      String
+  date        String
+  schoolDescr String
+  dataId      String @db.ObjectId
+  data        Data   @relation(fields: [dataId], references: [id])
+}
+
+model WorkExp {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  companyName String
+  jobTitle    String
+  date        String
+  workDescr   String
+  dataId      String @db.ObjectId
+  data        Data   @relation(fields: [dataId], references: [id])
+}
+
+model Project {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  projectName  String
+  projectDescr String
+  dataId       String @db.ObjectId
+  data         Data   @relation(fields: [dataId], references: [id])
+}
+
+model Interest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  interest String
+  dataId   String @db.ObjectId
+  data     Data   @relation(fields: [dataId], references: [id])
+}
