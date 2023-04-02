@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/lib/mongodb";
 import CryptoJS from "crypto-js";
+import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(
   req: NextApiRequest,
@@ -48,7 +49,7 @@ export default async function handler(
 
     const result = await db.collection("resumes").updateOne(
       {
-        _id: id ?? crypto.randomUUID(),
+        _id: id || uuidv4(),
       },
       {
         $set: {
