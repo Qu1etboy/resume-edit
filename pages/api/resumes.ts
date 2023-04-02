@@ -30,5 +30,5 @@ export default async function handler(
     );
   }
 
-  res.status(405).send("method not allowed");
+  return res.status(405).send("method not allowed");
 }

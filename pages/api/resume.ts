@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/lib/mongodb";
 import CryptoJS from "crypto-js";
 import { v4 as uuidv4 } from "uuid";
+import { getSession } from "next-auth/react";
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,11 +19,7 @@ export default async function handler(
       $or: [{ uid: uid }, { _id: id }],
     });
 
-    if (result === null) {
-      return res.status(200).json(result);
-    }
-
-    if (result?.resume === undefined) {
+    if (result === null || result?.resume === undefined) {
       return res.status(200).json(result);
     }
 
@@ -39,6 +36,13 @@ export default async function handler(
   }
 
   if (req.method === "POST") {
+    const session = await getSession({ req });
+
+    // Unauthorized user can't create or update a resume
+    if (!session || !session.user) {
+      return res.status(403).send("Unauthorized.");
+    }
+
     const { resume, uid, id } = req.body;
 
     // encrypt resume before store in db
@@ -65,5 +69,5 @@ export default async function handler(
     return res.status(201).json(result);
   }
 
-  res.status(405).send("method not allowed");
+  return res.status(405).send("Method not allowed.");
 }
