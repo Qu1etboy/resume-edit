@@ -27,7 +27,11 @@ export async function getStaticPaths() {
     }
 
     return {
-      paths: data.map((d: any) => ({ params: { id: d.id } })),
+      paths: data.map((d: any) => {
+        if (d.id !== undefined) {
+          return { params: { id: d.id } };
+        }
+      }),
       fallback: false,
     };
   } catch (error) {
