@@ -6,7 +6,7 @@ import type { GetStaticPropsContext } from "next";
 
 export default function ResumePage({
   resume,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetStaticPropsType<typeof getServerSideProps>) {
   return (
     <Container title="Resume Edit" className="w-full container mx-auto">
       <ResumeComponent resume={resume} />
@@ -14,39 +14,39 @@ export default function ResumePage({
   );
 }
 
-export async function getStaticPaths() {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
-    const data: Resume[] = await res.json();
+// export async function getStaticPaths() {
+//   try {
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
+//     const data: Resume[] = await res.json();
 
-    console.log(data);
+//     console.log(data);
 
-    if (!data) {
-      return {
-        paths: [],
-        fallback: false,
-      };
-    }
+//     if (!data) {
+//       return {
+//         paths: [],
+//         fallback: false,
+//       };
+//     }
 
-    return {
-      paths: data.map((d: any) => {
-        if (d.id !== undefined) {
-          return { params: { id: d.id } };
-        }
-      }),
-      fallback: false,
-    };
-  } catch (error) {
-    console.error(error);
+//     return {
+//       paths: data.map((d: any) => {
+//         if (d.id !== undefined) {
+//           return { params: { id: d.id } };
+//         }
+//       }),
+//       fallback: false,
+//     };
+//   } catch (error) {
+//     console.error(error);
 
-    return {
-      paths: [],
-      fallback: false,
-    };
-  }
-}
+//     return {
+//       paths: [],
+//       fallback: false,
+//     };
+//   }
+// }
 
-export async function getStaticProps({ params }: GetStaticPropsContext) {
+export async function getServerSideProps({ params }: GetStaticPropsContext) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/resume?id=${params?.id}`
