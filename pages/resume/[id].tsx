@@ -19,6 +19,13 @@ export async function getStaticPaths() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
     const data: Resume[] = await res.json();
 
+    if (!data) {
+      return {
+        paths: [],
+        fallback: false,
+      };
+    }
+
     return {
       paths: data.map((d: any) => ({ params: { id: d.id } })),
       fallback: false,
