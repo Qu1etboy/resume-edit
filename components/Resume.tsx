@@ -1,12 +1,4 @@
-import type {
-  Contact,
-  Education,
-  Interest,
-  Project,
-  Resume,
-  Skill,
-  WorkExp,
-} from "@/types/resume";
+import type { Resume } from "@/types/resume";
 import RichTextRenderer from "./richtext/RichTextRenderer";
 
 export default function Resume({ resume }: { resume: Resume }) {
@@ -23,7 +15,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           )}
           {resume.data.email && <li className="mr-5">{resume.data.email}</li>}
           {resume.data.phone && <li className="mr-5">{resume.data.phone}</li>}
-          {resume.data.contact.map((contact: Contact, idx: number) => (
+          {resume.data.contact.map((contact, idx) => (
             <li key={idx} className="mr-5 text-sm">
               <a
                 href={`https://${contact.link.replace(/^https?:\/\//i, "")}`}
@@ -41,7 +33,7 @@ export default function Resume({ resume }: { resume: Resume }) {
             Skills
           </h2>
           <ul className="list-disc ml-3">
-            {resume.data.skill.map((skill: Skill, idx: number) => (
+            {resume.data.skill.map((skill, idx) => (
               <li key={idx} className="text-sm">
                 {skill.skill}
               </li>
@@ -55,7 +47,7 @@ export default function Resume({ resume }: { resume: Resume }) {
             Educations
           </h2>
           <ul className="list-disc ml-3">
-            {resume.data.education.map((education: Education, idx: number) => (
+            {resume.data.education.map((education, idx) => (
               <li key={idx} className="text-sm">
                 <h3>
                   <b className="font-bold">{education.degree}</b>,{" "}
@@ -72,7 +64,7 @@ export default function Resume({ resume }: { resume: Resume }) {
           <h2 className="text-lg font-bold border-b border-black mb-2">
             Work Experience
           </h2>
-          {resume.data.workExp.map((workExp: WorkExp, idx: number) => (
+          {resume.data.workExp.map((workExp, idx) => (
             <div key={idx} className="mb-3">
               <div className="grid grid-cols-3 font-bold text-sm">
                 <h3>{workExp.jobTitle}</h3>
@@ -92,7 +84,7 @@ export default function Resume({ resume }: { resume: Resume }) {
             Projects
           </h2>
           <ul className="list-disc ml-5">
-            {resume.data.project.map((project: Project, idx: number) => (
+            {resume.data.project.map((project, idx) => (
               <li key={idx} className="text-sm">
                 <span className="font-bold">{project.projectName}</span>
                 <RichTextRenderer text={project.projectDescr} />
@@ -107,7 +99,7 @@ export default function Resume({ resume }: { resume: Resume }) {
             Interests
           </h2>
           <ul className="list-disc ml-5 text-sm">
-            {resume.data.interest.map((interest: Interest, idx: number) => (
+            {resume.data.interest.map((interest, idx) => (
               <li key={idx}>{interest.interest}</li>
             ))}
           </ul>

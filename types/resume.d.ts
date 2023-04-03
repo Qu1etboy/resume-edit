@@ -1,12 +1,10 @@
-import { ObjectId } from "bson";
-
 export interface Resume {
   id: string;
   uid: string;
   data: Data;
 }
 
-interface Data {
+export interface Data {
   id: string;
   name: string;
   job: string;

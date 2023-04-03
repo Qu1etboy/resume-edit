@@ -207,7 +207,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. John Doe"
           name="name"
-          value={resume.data?.name}
+          value={resume.data.name}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -215,7 +215,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. Software Engineer"
           name="job"
-          value={resume.data?.job}
+          value={resume.data.job}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -223,7 +223,7 @@ export default function FormComponent({
         <input
           placeholder="your address"
           name="address"
-          value={resume.data?.address}
+          value={resume.data.address}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -231,7 +231,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. name@mail.com"
           name="email"
-          value={resume.data?.email}
+          value={resume.data.email}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -239,7 +239,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. 098-xxx-xxx"
           name="phone"
-          value={resume.data?.phone}
+          value={resume.data.phone}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -260,9 +260,7 @@ export default function FormComponent({
           <AddFormButton
             text={form.button}
             name={form.name}
-            handleAdd={(e: React.MouseEvent<HTMLButtonElement>) =>
-              handleAddForm(e, resumeForm[idx].value)
-            }
+            handleAdd={(e) => handleAddForm(e, resumeForm[idx].value)}
           />
         </div>
       ))}
