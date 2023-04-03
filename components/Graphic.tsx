@@ -3,8 +3,7 @@ export function OnlineResumeLogo() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       data-name="Layer 1"
-      width="500"
-      height="400"
+      className="w-[300px] md:w-[450px] lg:w-[500px] mb-10"
       viewBox="0 0 931 633.23506"
     >
       <g id="a2bfc056-849c-4ec6-91e1-f91319e9ec32" data-name="Group 41">
@@ -309,7 +308,7 @@ export function ResumeLogo() {
       xmlns="http://www.w3.org/2000/svg"
       data-name="Layer 1"
       viewBox="0 0 753.87469 703.82827"
-      className="w-[450px] lg:w-[500px] mb-10"
+      className="w-[300px] lg:w-[500px] mb-10"
     >
       <path
         d="M578.47505,103.95771l-23.06843,12.58664L271.19846,271.61447,248.13,284.2011a48.1793,48.1793,0,0,0-19.1955,65.29607L440.57765,737.39072a48.17922,48.17922,0,0,0,65.296,19.19561l.05958-.03251L836.15907,576.37545l.05958-.03251a48.17924,48.17924,0,0,0,19.19553-65.296L643.77106,123.15338A48.17929,48.17929,0,0,0,578.47505,103.95771Z"
