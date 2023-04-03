@@ -19,6 +19,8 @@ export async function getStaticPaths() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
     const data: Resume[] = await res.json();
 
+    console.log(data);
+
     if (!data) {
       return {
         paths: [],
@@ -50,6 +52,14 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       `${process.env.NEXT_PUBLIC_API_URL}/api/resume?id=${params?.id}`
     );
     const resume: Resume = await res.json();
+
+    console.log(resume);
+
+    if (!resume) {
+      return {
+        notFound: true,
+      };
+    }
 
     return {
       // Passed to the page component as props
