@@ -14,38 +14,6 @@ export default function ResumePage({
   );
 }
 
-// export async function getStaticPaths() {
-//   try {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
-//     const data: Resume[] = await res.json();
-
-//     console.log(data);
-
-//     if (!data) {
-//       return {
-//         paths: [],
-//         fallback: false,
-//       };
-//     }
-
-//     return {
-//       paths: data.map((d: any) => {
-//         if (d.id !== undefined) {
-//           return { params: { id: d.id } };
-//         }
-//       }),
-//       fallback: false,
-//     };
-//   } catch (error) {
-//     console.error(error);
-
-//     return {
-//       paths: [],
-//       fallback: false,
-//     };
-//   }
-// }
-
 export async function getServerSideProps({ params }: GetStaticPropsContext) {
   try {
     const res = await fetch(

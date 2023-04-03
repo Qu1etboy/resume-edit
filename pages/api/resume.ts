@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import CryptoJS from "crypto-js";
 import { getSession } from "next-auth/react";
 import { PrismaClient } from "@prisma/client";
 import { Resume } from "@/types/resume";
@@ -32,12 +31,6 @@ export default async function handler(
         return res.status(200).json(result);
       }
 
-      // // decrypyt resume
-      // const bytes = CryptoJS.AES.decrypt(
-      //   result?.resume,
-      //   process.env.SECRET || "secret key"
-      // );
-
       return res.status(200).json(result);
     } catch (err) {
       console.error(err);
@@ -57,12 +50,6 @@ export default async function handler(
       const { resume }: { resume: Resume } = req.body;
 
       console.log(resume);
-
-      // encrypt resume before store in db
-      // const encrypted = CryptoJS.AES.encrypt(
-      //   JSON.stringify(resume),
-      //   process.env.SECRET || "secret key"
-      // ).toString();
 
       const result = await prisma.resume.upsert({
         where: {
