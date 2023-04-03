@@ -1,12 +1,32 @@
 import ResumeComponent from "@/components/Resume";
 import FormComponent from "@/components/FormComponent";
-import type { Resume } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { useSession, getSession } from "next-auth/react";
 import ResumeSkeletion from "@/components/ResumeSkeletion";
 import Container from "@/components/Container";
 import ShareModal from "@/components/ShareModal";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import type { Resume } from "@/types/resume";
+import { ObjectId } from "bson";
+
+const initialResume: Resume = {
+  id: new ObjectId().toString(),
+  uid: "",
+  data: {
+    id: new ObjectId().toString(),
+    name: "",
+    job: "",
+    address: "",
+    email: "",
+    phone: "",
+    contact: [],
+    skill: [],
+    education: [],
+    workExp: [],
+    project: [],
+    interest: [],
+  },
+};
 
 export default function EditResume() {
   const [resume, setResume] = useState<Resume | null>(null);
@@ -15,7 +35,6 @@ export default function EditResume() {
   const [isEdit, setEdit] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [openShareModal, setOpenShareModal] = useState(false);
-  const [collection, setCollection] = useState<any>({});
 
   useEffect(() => {
     const getData = async () => {
@@ -25,22 +44,10 @@ export default function EditResume() {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/resume?uid=${session?.user?.id}`
         );
-        const data = await res.json();
+        const resume: Resume = await res.json();
 
         // if there is no data or resume data is undefined used initial value
-        setResume(() =>
-          data === null || data.resume === undefined
-            ? {
-                name: "",
-                job: "",
-                address: "",
-                email: "",
-                phone: "",
-              }
-            : data.resume
-        );
-
-        setCollection(data);
+        setResume(resume === null ? initialResume : resume);
       } catch (error) {
         console.error(error);
       }
@@ -56,8 +63,6 @@ export default function EditResume() {
         method: "POST",
         body: JSON.stringify({
           resume,
-          id: collection?._id,
-          uid: session?.user?.id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +101,7 @@ export default function EditResume() {
         } fixed lg:relative lg:block w-full h-screen print:block print:h-full overflow-scroll p-5 print:p-0 print:border-0 bg-slate-400`}
       >
         <div className="print:hidden">
-          {collection && (
+          {resume && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -143,7 +148,7 @@ export default function EditResume() {
       </section>
       {openShareModal && (
         <ShareModal
-          link={`${process.env.NEXT_PUBLIC_API_URL}/resume/${collection?._id}`}
+          link={`${process.env.NEXT_PUBLIC_API_URL}/resume/${resume?.id}`}
           setOpenShareModal={handleSetOpenShareModal}
         />
       )}

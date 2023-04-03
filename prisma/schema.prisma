@@ -13,11 +13,10 @@ datasource db {
 model Resume {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   uid  String @unique
-  data Data?
+  data Data
 }
 
-model Data {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+type Data {
   name      String
   job       String
   address   String
@@ -29,56 +28,42 @@ model Data {
   workExp   WorkExp[]
   project   Project[]
   interest  Interest[]
-  resumeId  String      @unique @db.ObjectId
-  resume    Resume      @relation(fields: [resumeId], references: [id])
 }
 
-model Contact {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  label  String
-  link   String
-  dataId String @db.ObjectId
-  data   Data   @relation(fields: [dataId], references: [id])
+type Contact {
+  id    String
+  label String
+  link  String
 }
 
-model Skill {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  skill  String
-  dataId String @db.ObjectId
-  data   Data   @relation(fields: [dataId], references: [id])
+type Skill {
+  id    String
+  skill String
 }
 
-model Education {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+type Education {
+  id          String
   schoolName  String
   degree      String
   date        String
   schoolDescr String
-  dataId      String @db.ObjectId
-  data        Data   @relation(fields: [dataId], references: [id])
 }
 
-model WorkExp {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+type WorkExp {
+  id          String
   companyName String
   jobTitle    String
   date        String
   workDescr   String
-  dataId      String @db.ObjectId
-  data        Data   @relation(fields: [dataId], references: [id])
 }
 
-model Project {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
+type Project {
+  id           String
   projectName  String
   projectDescr String
-  dataId       String @db.ObjectId
-  data         Data   @relation(fields: [dataId], references: [id])
 }
 
-model Interest {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+type Interest {
+  id       String
   interest String
-  dataId   String @db.ObjectId
-  data     Data   @relation(fields: [dataId], references: [id])
 }

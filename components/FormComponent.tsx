@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import AddFormButton from "./AddFormButton";
 import Form from "./Form";
-import type { Resume } from "@/lib/types";
+import type { Resume } from "@/types/resume";
+import { ObjectId } from "bson";
 
 const resumeForm = [
   {
-    label: "Links",
-    name: "links",
+    label: "Contacts",
+    name: "contact",
     fields: [
       {
         label: "Label",
@@ -26,7 +27,7 @@ const resumeForm = [
   },
   {
     label: "Educations",
-    name: "educations",
+    name: "education",
     fields: [
       {
         label: "School Name",
@@ -58,7 +59,7 @@ const resumeForm = [
   },
   {
     label: "Work Experience",
-    name: "workExps",
+    name: "workExp",
     fields: [
       {
         label: "Company Name",
@@ -94,7 +95,7 @@ const resumeForm = [
   },
   {
     label: "Skills",
-    name: "skills",
+    name: "skill",
     fields: [
       {
         label: "Skill",
@@ -108,7 +109,7 @@ const resumeForm = [
   },
   {
     label: "Projects",
-    name: "projects",
+    name: "project",
     fields: [
       {
         label: "Project Name",
@@ -128,7 +129,7 @@ const resumeForm = [
   },
   {
     label: "Interests",
-    name: "interests",
+    name: "interest",
     fields: [
       {
         label: "Interest",
@@ -153,30 +154,44 @@ export default function FormComponent({
 }) {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setResume({ ...resume, [name]: value });
+
+    setResume({
+      ...resume,
+      data: { ...resume.data, [name]: value },
+    });
   };
 
   const handleAddForm = (e: React.MouseEvent<HTMLButtonElement>, data: any) => {
-    data = { ...data, id: crypto.randomUUID() };
+    data = { ...data, id: new ObjectId().toString() };
+
     setResume({
       ...resume,
-      [e.currentTarget.name]: resume[e.currentTarget.name]
-        ? [...resume[e.currentTarget.name], data]
-        : [data],
+      data: {
+        ...resume.data,
+        [e.currentTarget.name]: [...resume.data[e.currentTarget.name], data],
+      },
     });
   };
 
   const handleChangeData = (data: any, field: string) => {
     setResume({
       ...resume,
-      [field]: resume[field].map((d: any) => (d.id === data.id ? data : d)),
+      data: {
+        ...resume.data,
+        [field]: resume.data[field].map((d: any) =>
+          d.id === data.id ? data : d
+        ),
+      },
     });
   };
 
   const handleRemoveData = (dataId: string, field: string) => {
     setResume({
       ...resume,
-      [field]: resume[field].filter((d: any) => d.id !== dataId),
+      data: {
+        ...resume.data,
+        [field]: resume.data[field].filter((d: any) => d.id !== dataId),
+      },
     });
   };
 
@@ -192,7 +207,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. John Doe"
           name="name"
-          value={resume?.name}
+          value={resume.data?.name}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -200,7 +215,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. Software Engineer"
           name="job"
-          value={resume?.job}
+          value={resume.data?.job}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -208,7 +223,7 @@ export default function FormComponent({
         <input
           placeholder="your address"
           name="address"
-          value={resume?.address}
+          value={resume.data?.address}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -216,7 +231,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. name@mail.com"
           name="email"
-          value={resume?.email}
+          value={resume.data?.email}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -224,7 +239,7 @@ export default function FormComponent({
         <input
           placeholder="e.g. 098-xxx-xxx"
           name="phone"
-          value={resume?.phone}
+          value={resume.data?.phone}
           className="p-2.5 bg-gray-50 mb-3 border rounded-md w-full"
           onChange={handleInput}
         />
@@ -232,15 +247,16 @@ export default function FormComponent({
       {resumeForm.map((form, idx) => (
         <div key={idx}>
           <h2 className="text-lg mb-3 font-bold">{form.label}</h2>
-          {resume[form.name]?.map((value: any) => (
-            <Form
-              key={value.id}
-              form={resumeForm[idx]}
-              currValue={value}
-              handleChangeData={handleChangeData}
-              handleRemoveData={handleRemoveData}
-            />
-          ))}
+          {resume.data &&
+            resume.data[form.name]?.map((value: any) => (
+              <Form
+                key={value.id}
+                form={resumeForm[idx]}
+                currValue={value}
+                handleChangeData={handleChangeData}
+                handleRemoveData={handleRemoveData}
+              />
+            ))}
           <AddFormButton
             text={form.button}
             name={form.name}

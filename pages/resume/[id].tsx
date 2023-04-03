@@ -1,5 +1,6 @@
 import Container from "@/components/Container";
 import ResumeComponent from "@/components/Resume";
+import { Resume } from "@/types/resume";
 import type { InferGetStaticPropsType } from "next";
 import type { GetStaticPropsContext } from "next";
 
@@ -16,10 +17,10 @@ export default function ResumePage({
 export async function getStaticPaths() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resumes`);
-    const data = await res.json();
+    const data: Resume[] = await res.json();
 
     return {
-      paths: data.map((d: any) => ({ params: { id: d._id } })),
+      paths: data.map((d: any) => ({ params: { id: d.id } })),
       fallback: false,
     };
   } catch (error) {
@@ -37,11 +38,11 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/resume?id=${params?.id}`
     );
-    const data = await res.json();
+    const resume: Resume = await res.json();
 
     return {
       // Passed to the page component as props
-      props: { resume: data.resume },
+      props: { resume: resume },
     };
   } catch (error) {
     console.error(error);

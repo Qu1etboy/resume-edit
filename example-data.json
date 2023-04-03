@@ -1,0 +1,57 @@
+{
+  "id": "6429cf02aea7ab18a1e81a6c",
+  "uid": "something unique",
+  "data": {
+    "id": "6429cf02aea7ab18a1e81a6d",
+    "name": "Weerawong Vonggatunyu",
+    "job": "Software Engineer",
+    "address": "Bangkok, Thailand",
+    "email": "weerawong.v@gmail.com",
+    "phone": "0999999999",
+    "contact": [
+      {
+        "id": "6429cf02aea7ab18a1e81a6e",
+        "label": "LinkedIn",
+        "link": "linkedin.com/in/weerawong",
+        "dataId": "6429cf02aea7ab18a1e81a6d"
+      },
+      {
+        "id": "6429cf03aea7ab18a1e81a6f",
+        "label": "GitHub",
+        "link": "github.com/qu1etboy",
+        "dataId": "6429cf02aea7ab18a1e81a6d"
+      }
+    ],
+    "skill": [
+      {
+        "id": "6429cf03aea7ab18a1e81a70",
+        "skill": "Langauages: TypeScript, JavaScript, Python, C++",
+        "dataId": "6429cf02aea7ab18a1e81a6d"
+      },
+      {
+        "id": "6429cf03aea7ab18a1e81a71",
+        "skill": "Frameworks: Next.js, React, Express",
+        "dataId": "6429cf02aea7ab18a1e81a6d"
+      }
+    ],
+    "education": [
+      {
+        "id": "6429cf03aea7ab18a1e81a72",
+        "schoolName": "Kasetsart University",
+        "degree": "B.S. Computer Science",
+        "date": "2021-2022",
+        "schoolDescr": "",
+        "dataId": "6429cf02aea7ab18a1e81a6d"
+      }
+    ],
+    "workExp": [],
+    "project": [],
+    "interest": [
+      {
+        "id": "6429cf03aea7ab18a1e81a73",
+        "interest": "Areas: Coding, Reading, Music, Productivity",
+        "dataId": "6429cf02aea7ab18a1e81a6d"
+      }
+    ]
+  }
+}
